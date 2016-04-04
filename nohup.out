@@ -1,0 +1,6 @@
+Elasticsearch INFO: 2016-04-01T11:20:55Z
+  Adding connection to http://localhost:9200/
+
+Fri, 01 Apr 2016 11:20:56 GMT express-session deprecated undefined resave option; provide resave option at app.js:24:9
+Fri, 01 Apr 2016 11:20:56 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:24:9
+Express started on port 3000

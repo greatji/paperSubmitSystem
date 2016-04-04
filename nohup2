@@ -1,0 +1,169 @@
+Elasticsearch INFO: 2016-04-01T16:27:42Z
+  Adding connection to http://localhost:9200/
+
+Fri, 01 Apr 2016 16:27:42 GMT express-session deprecated undefined resave option; provide resave option at app.js:24:9
+Fri, 01 Apr 2016 16:27:42 GMT express-session deprecated undefined saveUninitialized option; provide saveUninitialized option at app.js:24:9
+Express started on port 3000
+TypeError: Cannot read property 'identity' of undefined
+    at router.post.client.getPasswordById.req.session.user.id (/home/greatji/PaperSubmitSystem/routes/index.js:19:22)
+    at Layer.handle [as handle_request] (/home/greatji/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/greatji/node_modules/express/lib/router/route.js:131:13)
+    at Route.dispatch (/home/greatji/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/home/greatji/node_modules/express/lib/router/layer.js:95:5)
+    at /home/greatji/node_modules/express/lib/router/index.js:277:22
+    at Function.process_params (/home/greatji/node_modules/express/lib/router/index.js:330:12)
+    at next (/home/greatji/node_modules/express/lib/router/index.js:271:10)
+    at Function.handle (/home/greatji/node_modules/express/lib/router/index.js:176:3)
+    at router (/home/greatji/node_modules/express/lib/router/index.js:46:12)
+Elasticsearch DEBUG: 2016-04-01T16:28:25Z
+  starting request { method: 'GET',
+    path: '/papersubmit/student/2012211374',
+    query: { _source_include: 'password' } }
+  
+
+Elasticsearch TRACE: 2016-04-01T16:28:26Z
+  -> GET http://localhost:9200/papersubmit/student/2012211374?_source_include=password
+  
+  <- 200
+  {
+    "_index": "papersubmit",
+    "_type": "student",
+    "_id": "2012211374",
+    "_version": 1,
+    "found": true,
+    "_source": {
+      "password": "123"
+    }
+  }
+
+Elasticsearch DEBUG: 2016-04-01T16:28:26Z
+  Request complete
+
+authentication success
+visit student index
+student 2012211374
+Elasticsearch DEBUG: 2016-04-01T16:28:26Z
+  starting request { method: 'GET',
+    path: '/papersubmit/student/2012211374',
+    query: { _source_exclude: 'password' } }
+  
+
+Elasticsearch TRACE: 2016-04-01T16:28:26Z
+  -> GET http://localhost:9200/papersubmit/student/2012211374?_source_exclude=password
+  
+  <- 200
+  {
+    "_index": "papersubmit",
+    "_type": "student",
+    "_id": "2012211374",
+    "_version": 1,
+    "found": true,
+    "_source": {
+      "paperScore": -1,
+      "paperUrl": "",
+      "paperStat": "no submit",
+      "paperTitle": "",
+      "teacherId": ""
+    }
+  }
+
+Elasticsearch DEBUG: 2016-04-01T16:28:26Z
+  Request complete
+
+Elasticsearch DEBUG: 2016-04-01T16:28:35Z
+  starting request { method: 'GET',
+    path: '/papersubmit/teacher/12345',
+    query: { _source_include: 'password' } }
+  
+
+Elasticsearch TRACE: 2016-04-01T16:28:35Z
+  -> GET http://localhost:9200/papersubmit/teacher/12345?_source_include=password
+  
+  <- 200
+  {
+    "_index": "papersubmit",
+    "_type": "teacher",
+    "_id": "12345",
+    "_version": 1,
+    "found": true,
+    "_source": {
+      "password": "123"
+    }
+  }
+
+Elasticsearch DEBUG: 2016-04-01T16:28:35Z
+  Request complete
+
+authentication success
+visit teacher index
+Elasticsearch DEBUG: 2016-04-01T16:28:35Z
+  starting request { method: 'POST',
+    path: '/papersubmit/_search',
+    body: { query: { match: [Object] } },
+    query: {} }
+  
+
+Elasticsearch TRACE: 2016-04-01T16:28:35Z
+  -> POST http://localhost:9200/papersubmit/_search
+  {
+    "query": {
+      "match": {
+        "paperStat": "submitted"
+      }
+    }
+  }
+  <- 200
+  {
+    "took": 5,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 0,
+      "max_score": null,
+      "hits": []
+    }
+  }
+
+Elasticsearch DEBUG: 2016-04-01T16:28:35Z
+  Request complete
+
+visit teacher index
+Elasticsearch DEBUG: 2016-04-01T16:29:08Z
+  starting request { method: 'POST',
+    path: '/papersubmit/_search',
+    body: { query: { match: [Object] } },
+    query: {} }
+  
+
+Elasticsearch TRACE: 2016-04-01T16:29:08Z
+  -> POST http://localhost:9200/papersubmit/_search
+  {
+    "query": {
+      "match": {
+        "paperStat": "submitted"
+      }
+    }
+  }
+  <- 200
+  {
+    "took": 7,
+    "timed_out": false,
+    "_shards": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "hits": {
+      "total": 0,
+      "max_score": null,
+      "hits": []
+    }
+  }
+
+Elasticsearch DEBUG: 2016-04-01T16:29:08Z
+  Request complete
+

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    		<title>论文打分系统老师管理界面</title>
+    		<script src="//cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+    		<link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" rel="stylesheet">
+    		<link href="stylesheets/layoutit.css" rel="stylesheet">
+    		<link href="stylesheets/bootstrap-combined.min.css" rel="stylesheet">
+    		<script src="//cdn.bootcss.com/bootstrap/4.0.0-alpha.2/js/bootstrap.min.js"></script>
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+		<meta charset="UTF-8">
+		<style>
+			.scroll-y {
+				overflow-y:auto;
+				height:500px;
+    				margin-left: auto;
+    				margin-right: auto;
+			}
+		</style>
+  	</head>
+  	<body>
+		<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span8">
+			<span class="badge"></span> 
+			<p class="label">显示论文</p><br>
+			<iframe id="showpaper" src="" style="width:718px; height:700px;" frameborder="0"></iframe><br> 
+			<p class="label"></span> <span class="label">为此学生打分</p>
+			<form method="post" action="/teacher/submitScore">
+				<fieldset>
+					 <legend>学生ID</legend> <label>填写分数</label><input id="score" name="score"/> <span class="help-block">输入分数在0~100之间</span> <label id="check" class="checkbox"><input name="check" type="checkbox" />确定您已经认真审阅该学生文章，打分之后不能更改</label> <input type="hidden" name="id" id="studentId" value=><button href="submitScore()" class="btn">提交</button>
+				</fieldset>
+			</form>
+		</div>
+		<div class="span4">
+			<div class="page-header">
+				<h1>
+					已提交论文学生列表 <small>请点击选择查看论文并打分</small>
+				</h1>
+			</div>
+			<input class="input-medium search-query" oninput="findId(event)" type="text" /> 
+			<ol id="studentList" class="scroll-y">
+			</ol>
+			<!-- 多说评论框 start -->
+					<div class="ds-thread" data-thread-key="0000" data-title="留言板" data-url=""></div>
+					<!-- 多说评论框 end -->
+					<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+					<script type="text/javascript">
+					var duoshuoQuery = {short_name:"greatji"};
+					(function() {
+						var ds = document.createElement('script');
+						ds.type = 'text/javascript';ds.async = true;
+						ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+						ds.charset = 'UTF-8';
+						(document.getElementsByTagName('head')[0] 
+		 				|| document.getElementsByTagName('body')[0]).appendChild(ds);
+						})();
+					</script>
+					<!-- 多说公共JS代码 end -->
+
+		</div>
+	</div>
+</div>
+  	</body>
+</html>
+<script>
+	$(document).ready(function(){
+		window.students = [];
+		$.get("/teacher/getSubmittedStudent",
+  			function(data,status){
+				for (i in data) {
+					var student = {url:data[i]._source.paperUrl, id:data[i]._id};
+					window.students.push(student);
+					$("ol#studentList").append('<li onclick="chooseStudent(this)" paperurl="'+data[i]._source.paperUrl+'"><h2>'+data[i]._id+'</h2></li>');
+				}
+  			});
+	});
+	
+	function findIdByPattern(pattern) {
+		$("ol#studentList").children("li").remove() 
+		if (pattern === "") {
+			for (i in window.students) {
+				$("ol#studentList").append('<li onclick="chooseStudent(this)" paperurl="'+window.students[i].url+'"><h2>'+window.students[i].id+'</h2></li>');
+			}
+		} else {
+			var p = new RegExp("^"+pattern);
+			for (i in window.students) {
+				if (p.exec(window.students[i].id) != null) {
+					$("ol#studentList").append('<li onclick="chooseStudent(this)" paperurl="'+window.students[i].url+'"><h2>'+window.students[i].id+'</h2></li>');
+				}
+			}
+		}	
+	}
+
+	function chooseStudent(node) {
+		var url = $(node).attr("paperurl");
+		$('#showpaper').attr("src", url.split("/")[1]);
+		$("legend").text($(node).children("h2").text());
+		$("input#studentId").attr("value", $(node).children("h2").text());
+	};
+	function findId(event) {
+		findIdByPattern(event.target.value);
+	}
+</script>
